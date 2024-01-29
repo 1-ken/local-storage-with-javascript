@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Preferences</title>
+  <style id="theme-styles">
+    /* Default light theme styles */
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Theme Preferences</h1>
+  <label>
+    <input type="radio" name="theme" value="light" > Light Theme
+  </label>
+  <label>
+    <input type="radio" name="theme" value="dark"> Dark Theme
+  </label>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Retrieve the saved theme preference from localStorage
+      const savedTheme = localStorage.getItem('theme');
+
+      // Apply the saved theme or use the default (light) theme
+      const themeStyles = document.getElementById('theme-styles');
+      if (savedTheme === 'dark') {
+        applyDarkTheme();
+      }
+
+      // Add event listener to radio buttons for theme selection
+      document.querySelectorAll('input[name="theme"]').forEach(input => {
+        input.addEventListener('change', function () {
+          if (this.checked) {
+            const selectedTheme = this.value;
+            console.log(selectedTheme)
+            localStorage.setItem('theme', selectedTheme);
+
+            // Apply the selected theme
+            if (selectedTheme === 'dark') {
+              applyDarkTheme();
+            } else {
+              applyLightTheme();
+            }
+          }
+        });
+      });
+
+      function applyDarkTheme() {
+        themeStyles.innerHTML = `
+          /* Dark theme styles */
+          body {
+            background-color: #333;
+            color: #fff;
+          }
+        `;
+      }
+
+      function applyLightTheme() {
+        themeStyles.innerHTML = `
+          /* Light theme styles */
+          body {
+            background-color: #f5f5f5;
+            color: #333;
+          }
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
